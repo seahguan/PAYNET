@@ -1,349 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.1 (Python 3.8.3 on win32)" generated="20200814 14:03:00.833" rpa="false">
-<suite id="s1" name="AmazonTestScript" source="D:\python\PAYNET\tests\AmazonTestScript.robot">
-<test id="s1-t1" name="Login with Invalid Credential Info 1">
-<kw name="Begin Web Test" library="Common" type="setup">
+<robot generator="Robot 3.2.1 (Python 3.8.3 on win32)" generated="20200817 16:37:42.631" rpa="false">
+<suite id="s1" name="APITest" source="D:\python\PAYNET\tests\APITest.robot">
+<test id="s1-t1" name="Master Card API test case">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>${BROWSER}</arg>
+<arg>MASTERCARD_session</arg>
+<arg>${MasterCard_Base_URL}</arg>
 </arguments>
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20200817 16:37:43.027" level="INFO">Creating Session using : alias=MASTERCARD_session, url=https://api.mastercard.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200817 16:37:43.026" endtime="20200817 16:37:43.027"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>about:blank</arg>
-<arg>${BROWSER}</arg>
+<arg>MASTERCARD_session</arg>
+<arg>enhanced/settlement/currencyrate/subscribed/summary-rates</arg>
 </arguments>
-<msg timestamp="20200814 14:03:01.157" level="INFO">Opening browser 'chrome' to base url 'about:blank'.</msg>
-<status status="PASS" starttime="20200814 14:03:01.157" endtime="20200814 14:03:04.466"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200817 16:37:43.538" level="INFO">GET Request : url=https://api.mastercard.com/enhanced/settlement/currencyrate/subscribed/summary-rates 
+ path_url=/enhanced/settlement/currencyrate/subscribed/summary-rates 
+ headers={'User-Agent': 'python-requests/2.23.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20200817 16:37:43.539" level="INFO">GET Response : url=https://api.mastercard.com/enhanced/settlement/currencyrate/subscribed/summary-rates 
+ status=400, reason=Bad Request 
+ body={
+  "Errors": {
+    "Error": [
+      {
+        "Source": "Gateway",
+        "ReasonCode": "INVALID_OAUTH_SBS",
+        "Description": "Problem with signature base string. Missing oauth_consumer_key",
+        "Recoverable": false,
+        "Details": null
+      }
+    ]
+  }
+} 
+ </msg>
+<msg timestamp="20200817 16:37:43.539" level="INFO">C:\Users\Admin-pc\AppData\Local\Programs\Python\Python38-32\lib\site-packages\urllib3\connectionpool.py:979: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.mastercard.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200817 16:37:43.539" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20200817 16:37:43.027" endtime="20200817 16:37:43.539"></status>
 </kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20200814 14:03:04.466" endtime="20200814 14:03:06.613"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:01.156" endtime="20200814 14:03:06.613"></status>
-</kw>
-<kw name="Load Page" library="Amazon">
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>${URL}</arg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
 </arguments>
-<kw name="Load" library="LandingPage">
+<msg timestamp="20200817 16:37:43.541" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20200817 16:37:43.540" endtime="20200817 16:37:43.541"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
 <arguments>
-<arg>${URL}</arg>
+<arg>${response.status_code} == 200</arg>
+<arg>Keyword 1</arg>
 </arguments>
-<kw name="Go To" library="SeleniumLibrary">
-<doc>Navigates the current browser window to the provided ``url``.</doc>
-<arguments>
-<arg>${URL}</arg>
-</arguments>
-<msg timestamp="20200814 14:03:06.616" level="INFO">Opening url 'https://www.amazon.com'</msg>
-<status status="PASS" starttime="20200814 14:03:06.616" endtime="20200814 14:03:10.439"></status>
+<status status="PASS" starttime="20200817 16:37:43.542" endtime="20200817 16:37:43.542"></status>
 </kw>
-<status status="PASS" starttime="20200814 14:03:06.615" endtime="20200814 14:03:10.439"></status>
-</kw>
-<kw name="Verify Page Loaded" library="LandingPage">
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<doc>Waits until ``text`` appears on the current page.</doc>
-<arguments>
-<arg>Hello</arg>
-</arguments>
-<status status="PASS" starttime="20200814 14:03:10.440" endtime="20200814 14:03:10.500"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:10.440" endtime="20200814 14:03:10.500"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:06.614" endtime="20200814 14:03:10.501"></status>
-</kw>
-<kw name="Sign In Using Incorrect Mobile NO" library="Amazon">
-<arguments>
-<arg>${MOBILE_NO}</arg>
-</arguments>
-<kw name="Sign In" library="TopNavSection">
-<doc>mouse Hover to the Sign in link and click on the Sign in button</doc>
-<kw name="Mouse Over" library="SeleniumLibrary">
-<doc>Simulates hovering the mouse over the element ``locator``.</doc>
-<arguments>
-<arg>xpath=//*[@id="nav-link-accountList"]/div</arg>
-</arguments>
-<msg timestamp="20200814 14:03:10.506" level="INFO">Simulating Mouse Over on element 'xpath=//*[@id="nav-link-accountList"]/div'.</msg>
-<status status="PASS" starttime="20200814 14:03:10.505" endtime="20200814 14:03:11.091"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>id=nav-flyout-ya-signin</arg>
-</arguments>
-<msg timestamp="20200814 14:03:11.092" level="INFO">Clicking element 'id=nav-flyout-ya-signin'.</msg>
-<status status="PASS" starttime="20200814 14:03:11.092" endtime="20200814 14:03:12.177"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:10.504" endtime="20200814 14:03:12.177"></status>
-</kw>
-<kw name="Verify Page Loaded" library="SignIn">
-<kw name="Page Should Contain Element" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` is found on the current page.</doc>
-<arguments>
-<arg>createAccountSubmit</arg>
-</arguments>
-<msg timestamp="20200814 14:03:12.250" level="INFO">Current page contains element 'createAccountSubmit'.</msg>
-<status status="PASS" starttime="20200814 14:03:12.179" endtime="20200814 14:03:12.250"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>createAccountSubmit</arg>
-<arg>Create your Amazon account</arg>
-</arguments>
-<msg timestamp="20200814 14:03:12.251" level="INFO">Verifying element 'createAccountSubmit' contains exact text 'Create your Amazon account'.</msg>
-<status status="PASS" starttime="20200814 14:03:12.251" endtime="20200814 14:03:12.316"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:12.178" endtime="20200814 14:03:12.316"></status>
-</kw>
-<kw name="Login with Invalid Mobile NO" library="SignIn">
-<arguments>
-<arg>${MOBILE_NO}</arg>
-</arguments>
-<kw name="Fill IN MObile NO" library="SignIn">
-<doc>login using the mobile no #</doc>
-<arguments>
-<arg>${MOBILE_NO}</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>id=ap_email</arg>
-<arg>${MOBILE_NO}</arg>
-</arguments>
-<msg timestamp="20200814 14:03:12.320" level="INFO">Typing text '011122962877' into text field 'id=ap_email'.</msg>
-<status status="PASS" starttime="20200814 14:03:12.319" endtime="20200814 14:03:12.537"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:12.318" endtime="20200814 14:03:12.538"></status>
-</kw>
-<kw name="Click Continue Button" library="SignIn">
-<doc>click on the continue button</doc>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>id=continue</arg>
-</arguments>
-<msg timestamp="20200814 14:03:12.540" level="INFO">Clicking button 'id=continue'.</msg>
-<status status="PASS" starttime="20200814 14:03:12.539" endtime="20200814 14:03:14.486"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:12.538" endtime="20200814 14:03:14.487"></status>
-</kw>
-<kw name="Verify Error Message Incorrect phone number" library="SignIn">
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<doc>Waits until ``text`` appears on the current page.</doc>
-<arguments>
-<arg>Sign-In</arg>
-</arguments>
-<status status="PASS" starttime="20200814 14:03:14.489" endtime="20200814 14:03:14.528"></status>
-</kw>
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<doc>Waits until ``text`` appears on the current page.</doc>
-<arguments>
-<arg>Incorrect phone number</arg>
-</arguments>
-<status status="PASS" starttime="20200814 14:03:14.528" endtime="20200814 14:03:14.546"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:14.487" endtime="20200814 14:03:14.546"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:12.317" endtime="20200814 14:03:14.546"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:10.501" endtime="20200814 14:03:14.546"></status>
-</kw>
-<kw name="End Web Test" library="Common" type="teardown">
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20200814 14:03:14.548" endtime="20200814 14:03:16.777"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:14.547" endtime="20200814 14:03:16.777"></status>
-</kw>
-<doc>To test the invalid login id using Mobile No</doc>
-<tags>
-<tag>Negative Test Scenario 2</tag>
-</tags>
-<status status="PASS" starttime="20200814 14:03:01.155" endtime="20200814 14:03:16.778" critical="yes"></status>
+<status status="PASS" starttime="20200817 16:37:43.025" endtime="20200817 16:37:43.543" critical="yes"></status>
 </test>
-<test id="s1-t2" name="Login with Invalid Credential Info 2">
-<kw name="Begin Web Test" library="Common" type="setup">
-<arguments>
-<arg>${BROWSER}</arg>
-</arguments>
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>about:blank</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20200814 14:03:16.782" level="INFO">Opening browser 'chrome' to base url 'about:blank'.</msg>
-<status status="PASS" starttime="20200814 14:03:16.781" endtime="20200814 14:03:20.065"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20200814 14:03:20.066" endtime="20200814 14:03:22.241"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:16.781" endtime="20200814 14:03:22.242"></status>
-</kw>
-<kw name="Load Page" library="Amazon">
-<arguments>
-<arg>${URL}</arg>
-</arguments>
-<kw name="Load" library="LandingPage">
-<arguments>
-<arg>${URL}</arg>
-</arguments>
-<kw name="Go To" library="SeleniumLibrary">
-<doc>Navigates the current browser window to the provided ``url``.</doc>
-<arguments>
-<arg>${URL}</arg>
-</arguments>
-<msg timestamp="20200814 14:03:22.243" level="INFO">Opening url 'https://www.amazon.com'</msg>
-<status status="PASS" starttime="20200814 14:03:22.243" endtime="20200814 14:03:25.480"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:22.242" endtime="20200814 14:03:25.481"></status>
-</kw>
-<kw name="Verify Page Loaded" library="LandingPage">
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<doc>Waits until ``text`` appears on the current page.</doc>
-<arguments>
-<arg>Hello</arg>
-</arguments>
-<status status="PASS" starttime="20200814 14:03:25.483" endtime="20200814 14:03:25.641"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:25.481" endtime="20200814 14:03:25.641"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:22.242" endtime="20200814 14:03:25.642"></status>
-</kw>
-<kw name="Sign In Using Incorrect Email Acc" library="Amazon">
-<arguments>
-<arg>${EMAIL_ADDR}</arg>
-</arguments>
-<kw name="Sign In" library="TopNavSection">
-<doc>mouse Hover to the Sign in link and click on the Sign in button</doc>
-<kw name="Mouse Over" library="SeleniumLibrary">
-<doc>Simulates hovering the mouse over the element ``locator``.</doc>
-<arguments>
-<arg>xpath=//*[@id="nav-link-accountList"]/div</arg>
-</arguments>
-<msg timestamp="20200814 14:03:25.646" level="INFO">Simulating Mouse Over on element 'xpath=//*[@id="nav-link-accountList"]/div'.</msg>
-<status status="PASS" starttime="20200814 14:03:25.646" endtime="20200814 14:03:26.201"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>id=nav-flyout-ya-signin</arg>
-</arguments>
-<msg timestamp="20200814 14:03:26.202" level="INFO">Clicking element 'id=nav-flyout-ya-signin'.</msg>
-<status status="PASS" starttime="20200814 14:03:26.201" endtime="20200814 14:03:27.334"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:25.645" endtime="20200814 14:03:27.334"></status>
-</kw>
-<kw name="Verify Page Loaded" library="SignIn">
-<kw name="Page Should Contain Element" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` is found on the current page.</doc>
-<arguments>
-<arg>createAccountSubmit</arg>
-</arguments>
-<msg timestamp="20200814 14:03:27.430" level="INFO">Current page contains element 'createAccountSubmit'.</msg>
-<status status="PASS" starttime="20200814 14:03:27.337" endtime="20200814 14:03:27.430"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>createAccountSubmit</arg>
-<arg>Create your Amazon account</arg>
-</arguments>
-<msg timestamp="20200814 14:03:27.431" level="INFO">Verifying element 'createAccountSubmit' contains exact text 'Create your Amazon account'.</msg>
-<status status="PASS" starttime="20200814 14:03:27.431" endtime="20200814 14:03:27.474"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:27.335" endtime="20200814 14:03:27.474"></status>
-</kw>
-<kw name="Login with Invalid acc" library="SignIn">
-<arguments>
-<arg>${EMAIL_ADDR}</arg>
-</arguments>
-<kw name="Fill IN Acc" library="SignIn">
-<doc>login using Email address#</doc>
-<arguments>
-<arg>${EMAIL_ADDR}</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>id=ap_email</arg>
-<arg>${EMAIL_ADDR}</arg>
-</arguments>
-<msg timestamp="20200814 14:03:27.477" level="INFO">Typing text 'se11ahguanlow@gmail.com' into text field 'id=ap_email'.</msg>
-<status status="PASS" starttime="20200814 14:03:27.476" endtime="20200814 14:03:27.818"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:27.475" endtime="20200814 14:03:27.819"></status>
-</kw>
-<kw name="Click Continue Button" library="SignIn">
-<doc>click on the continue button</doc>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>id=continue</arg>
-</arguments>
-<msg timestamp="20200814 14:03:27.820" level="INFO">Clicking button 'id=continue'.</msg>
-<status status="PASS" starttime="20200814 14:03:27.819" endtime="20200814 14:03:29.368"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:27.819" endtime="20200814 14:03:29.369"></status>
-</kw>
-<kw name="Verify Error Message Incorrect acc" library="SignIn">
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<doc>Waits until ``text`` appears on the current page.</doc>
-<arguments>
-<arg>Sign-In</arg>
-</arguments>
-<status status="PASS" starttime="20200814 14:03:29.370" endtime="20200814 14:03:29.408"></status>
-</kw>
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<doc>Verifies that current page contains ``text``.</doc>
-<arguments>
-<arg>There was a problem</arg>
-</arguments>
-<msg timestamp="20200814 14:03:29.437" level="INFO">Current page contains text 'There was a problem'.</msg>
-<status status="PASS" starttime="20200814 14:03:29.409" endtime="20200814 14:03:29.437"></status>
-</kw>
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<doc>Verifies that current page contains ``text``.</doc>
-<arguments>
-<arg>We cannot find an account with that email address</arg>
-</arguments>
-<msg timestamp="20200814 14:03:29.461" level="INFO">Current page contains text 'We cannot find an account with that email address'.</msg>
-<status status="PASS" starttime="20200814 14:03:29.438" endtime="20200814 14:03:29.462"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:29.369" endtime="20200814 14:03:29.462"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:27.474" endtime="20200814 14:03:29.463"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:25.643" endtime="20200814 14:03:29.463"></status>
-</kw>
-<kw name="End Web Test" library="Common" type="teardown">
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20200814 14:03:29.465" endtime="20200814 14:03:31.692"></status>
-</kw>
-<status status="PASS" starttime="20200814 14:03:29.464" endtime="20200814 14:03:31.692"></status>
-</kw>
-<doc>To test the invalid login id using username</doc>
-<tags>
-<tag>Negative Test Scenario 3</tag>
-</tags>
-<status status="PASS" starttime="20200814 14:03:16.780" endtime="20200814 14:03:31.693" critical="yes"></status>
-</test>
-<doc>initial script basic requirement</doc>
-<status status="PASS" starttime="20200814 14:03:00.835" endtime="20200814 14:03:31.695"></status>
+<doc>API Test Case</doc>
+<status status="PASS" starttime="20200817 16:37:42.633" endtime="20200817 16:37:43.546"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0">Critical Tests</stat>
-<stat pass="2" fail="0">All Tests</stat>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0">Negative Test Scenario 2</stat>
-<stat pass="1" fail="0">Negative Test Scenario 3</stat>
 </tag>
 <suite>
-<stat pass="2" fail="0" id="s1" name="AmazonTestScript">AmazonTestScript</stat>
+<stat pass="1" fail="0" id="s1" name="APITest">APITest</stat>
 </suite>
 </statistics>
 <errors>
