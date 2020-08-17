@@ -13,37 +13,37 @@ ${PART_VAL}  snippet
 ${Search_Item}  Mr. player
 
 *** Test Cases ***
-YouTube API 1st API test case
-    # Create the Session
-    create session    YOUTUBE_session       ${youtubebase_URL}
-
-    # Make the call and capture the response
-    ${response} =  get request    YOUTUBE_session   /v3/search?part=${PART_VAL}&q=${Search_Item}&key=${APIKEY}
-
-    # Check the Response Statuss
-    should be equal as strings  ${response.status_code}   200
-
-    # check the content type is equal to application/json
-    ${content_type} =  get from dictionary     ${response.headers}  Content-Type
-    should be equal     ${content_type}     application/json; charset=UTF-8
-#    log  ${response.headers}
-#    log  ${content_type}
-
-
-YouTube API 2nd API test case
-   # Create the Session
-    create session    YOUTUBE_session       ${youtubebase_URL}
-
-    # Make the call and capture the response
-    ${response} =  post Request   YOUTUBE_session    youtube/v3/subscriptions
-
-    # Check the Response Status
-    should be equal as strings    ${response.status_code}   404
-
+#YouTube API 1st API test case
+#    # Create the Session
+#    create session    YOUTUBE_session       ${youtubebase_URL}
+#
+#    # Make the call and capture the response
+#    ${response} =  get request    YOUTUBE_session   /v3/search?part=${PART_VAL}&q=${Search_Item}&key=${APIKEY}
+#
+#    # Check the Response Statuss
+#    should be equal as strings  ${response.status_code}   200
+#
 #    # check the content type is equal to application/json
 #    ${content_type} =  get from dictionary     ${response.headers}  Content-Type
 #    should be equal     ${content_type}     application/json; charset=UTF-8
+##    log  ${response.headers}
+##    log  ${content_type}
+#
 
+#YouTube API 2nd API test case
+#   # Create the Session
+#    create session    YOUTUBE_session       ${youtubebase_URL}
+#
+#    # Make the call and capture the response
+#    ${response} =  post Request   YOUTUBE_session    youtube/v3/subscriptions
+#
+#    # Check the Response Status
+#    should be equal as strings    ${response.status_code}   404
+#
+##    # check the content type is equal to application/json
+##    ${content_type} =  get from dictionary     ${response.headers}  Content-Type
+##    should be equal     ${content_type}     application/json; charset=UTF-8
+#
 
 Master Card API test case
     # Create the Session
