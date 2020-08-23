@@ -1,5 +1,7 @@
 ECHO Starting batch run at Saucelabs.com
-cd C:\development\robot-scripts\sauce\simple-variable-end
+ECHO cd to the PRoject folder
+Echo Example d:\Python\Project\PAYNET
+cd D:\python\PAYNET
 
 ECHO Win10/Chrome70:
 start robot -v REMOTE_URL:https://Seahguan:e7f1d5d0-d42c-45c0-9dba-970abea248ec@ondemand.us-west-1.saucelabs.com:443/wd/hub	-d results/Win10Chrome70 	-v DESIRED_CAPABILITIES:"name:Win 10 + Chrome 70, platform:Windows 10,browserName:chrome,version:70.0"	tests/amazonTestScript.robot
@@ -13,3 +15,4 @@ start robot -v REMOTE_URL:https://Seahguan:e7f1d5d0-d42c-45c0-9dba-970abea248ec@
 
 ECHO Starting API Test
 start robot -d results/API_Results  tests/APITest.robot
+
